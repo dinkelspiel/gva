@@ -1,4 +1,3 @@
-import glailwind_merge
 import gleam/list
 import gleam/string
 
@@ -59,7 +58,7 @@ pub fn build(class: Class(a)) -> String {
 
   let applied = do_build(class.resolver, class.using, [])
 
-  glailwind_merge.tw_merge([class.default, remaining_defaults, applied])
+  string.join([class.default, remaining_defaults, applied], " ")
 }
 
 /// Helper to create a gva Class type
