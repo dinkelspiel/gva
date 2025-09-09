@@ -62,6 +62,79 @@ pub fn build(class: Class(a)) -> String {
   glailwind_merge.tw_merge([class.default, remaining_defaults, applied])
 }
 
+/// Helper to create a gva Class type
+/// 
+/// The default parameter is the string that will be used regardless of any other parameters
+/// 
+/// The resolver handles which types should go to which classes
+/// 
+/// The comparator checks when two top level keys are matching
+/// 
+/// 
+/// ## Examples
+/// 
+/// ```gleam
+/// type Size {
+///   Small
+///   Medium
+/// }
+/// 
+/// type Variant {
+///   Primary
+///   Secondary
+/// }
+/// 
+/// // Define a master Key type for all Variants
+/// type Key {
+///   Size(Size)
+///   Variant(Variant)
+/// }
+/// 
+/// pub fn main() {
+///   let button =
+///     gva(
+///       default: "text-white",
+///       // Define a resolver to handle which types should go
+///       // to which classes
+///       resolver: fn(in: Key) {
+///         case in {
+///           Size(size) ->
+///             case size {
+///               Small -> "text-sm"
+///               Medium -> "text-md"
+///             }
+///           Variant(variant) ->
+///             case variant {
+///               Primary -> "bg-slate-950"
+///               Secondary -> "bg-slate-600"
+///             }
+///         }
+///       },
+///       // Define which defaults should be applied, if no defaults are
+///       // provided and no with() calls are done then the resulting class
+///       // will only include the default string which might not be favorable
+///       defaults: [Variant(Primary)],
+///       // Create a comparator to see when two top level keys are matching
+///       comparator: fn(a: Key, b: Key) {
+///         case a, b {
+///           Size(_), Size(_) -> True
+///           Variant(_), Variant(_) -> True
+///           _, _ -> False
+///         }
+///       },
+///     )
+/// 
+///   let class =
+///     button
+///     |> with(Size(Medium))
+///     |> with(Variant(Secondary))
+///     |> build()
+/// 
+///   assert class == "text-white text-md bg-slate-600"
+/// 
+///   Nil
+/// } 
+/// ```
 pub fn gva(
   default default: String,
   resolver resolver: fn(a) -> String,
