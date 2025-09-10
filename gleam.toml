@@ -1,6 +1,6 @@
 name = "gva"
 description = "Type-safe, composable class variants for Gleam"
-version = "1.1.0"
+version = "1.2.0"
 target = "javascript"
 licences = ["Apache-2.0"]
 repository = { type = "github", user = "dinkelspiel", repo = "gva" }
