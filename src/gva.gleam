@@ -1,3 +1,4 @@
+import comparator
 import gleam/list
 import gleam/string
 
@@ -6,7 +7,6 @@ pub type Class(a) {
     default: String,
     resolver: fn(a) -> String,
     defaults: List(a),
-    comparator: fn(a, a) -> Bool,
     using: List(a),
   )
 }
@@ -38,7 +38,7 @@ fn get_relevant_defaults(
   case defaults {
     [default, ..defaults] -> {
       let is_applied =
-        list.filter(using, fn(a) { class.comparator(a, default) })
+        list.filter(using, fn(a) { comparator.is_same_kind(a, default) })
         |> list.length
         > 0
       case is_applied {
@@ -66,8 +66,6 @@ pub fn build(class: Class(a)) -> String {
 /// The default parameter is the string that will be used regardless of any other parameters
 /// 
 /// The resolver handles which types should go to which classes
-/// 
-/// The comparator checks when two top level keys are matching
 /// 
 /// 
 /// ## Examples
@@ -113,14 +111,6 @@ pub fn build(class: Class(a)) -> String {
 ///       // provided and no with() calls are done then the resulting class
 ///       // will only include the default string which might not be favorable
 ///       defaults: [Variant(Primary)],
-///       // Create a comparator to see when two top level keys are matching
-///       comparator: fn(a: Key, b: Key) {
-///         case a, b {
-///           Size(_), Size(_) -> True
-///           Variant(_), Variant(_) -> True
-///           _, _ -> False
-///         }
-///       },
 ///     )
 /// 
 ///   let class =
@@ -137,8 +127,7 @@ pub fn build(class: Class(a)) -> String {
 pub fn gva(
   default default: String,
   resolver resolver: fn(a) -> String,
-  comparator comparator: fn(a, a) -> Bool,
   defaults defaults: List(a),
 ) {
-  Class(default, resolver, defaults, comparator, [])
+  Class(default, resolver, defaults, [])
 }

@@ -2,6 +2,7 @@
 # You typically do not need to edit this file
 
 packages = [
+  { name = "comparator", version = "1.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "comparator", source = "hex", outer_checksum = "62A817E00FF301CE780F03D0FEE0943D5881138B3852F1DEE2FB72381604F949" },
   { name = "glailwind_merge", version = "1.1.0", build_tools = ["gleam"], requirements = ["tails"], otp_app = "glailwind_merge", source = "hex", outer_checksum = "3A9B557E63D174A430950B9748180DF386C96DEAD1FD0E6891A98D3A76175C59" },
   { name = "gleam_stdlib", version = "0.63.0", build_tools = ["gleam"], requirements = [], otp_app = "gleam_stdlib", source = "hex", outer_checksum = "5E216C7D5E8BE22359C9D7DAA2CFBD66039BC12565542F34CD033C5BB57071ED" },
   { name = "gleeunit", version = "1.6.1", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleeunit", source = "hex", outer_checksum = "FDC68A8C492B1E9B429249062CD9BAC9B5538C6FBF584817205D0998C42E1DAC" },
@@ -10,6 +11,7 @@ packages = [
 ]
 
 [requirements]
+comparator = { version = ">= 1.0.0 and < 2.0.0" }
 glailwind_merge = { version = ">= 1.1.0 and < 2.0.0" }
 gleam_stdlib = { version = ">= 0.44.0 and < 2.0.0" }
 gleeunit = { version = ">= 1.0.0 and < 2.0.0" }

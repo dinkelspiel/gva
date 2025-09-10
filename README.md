@@ -52,14 +52,6 @@ pub fn main() {
       // provided and no with() calls are done then the resulting class
       // will only include the default string which might not be favorable
       defaults: [Variant(Primary)],
-      // Create a comparator to see when two top level keys are matching
-      comparator: fn(a: Key, b: Key) {
-        case a, b {
-          Size(_), Size(_) -> True
-          Variant(_), Variant(_) -> True
-          _, _ -> False
-        }
-      },
     )
 
   let class =

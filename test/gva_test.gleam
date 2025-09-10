@@ -40,13 +40,6 @@ pub fn basic_test() -> Nil {
         }
       },
       defaults: [],
-      comparator: fn(a: BasicKey, b: BasicKey) {
-        case a, b {
-          BasicSize(_), BasicSize(_) -> True
-          BasicVariant(_), BasicVariant(_) -> True
-          _, _ -> False
-        }
-      },
     )
 
   let class =
@@ -113,13 +106,6 @@ fn advanced_button() {
       AdvancedVariant(AdvancedDefaultVariant),
       AdvancedSize(AdvancedDefaultSize),
     ],
-    comparator: fn(a: AdvancedKey, b: AdvancedKey) {
-      case a, b {
-        AdvancedSize(_), AdvancedSize(_) -> True
-        AdvancedVariant(_), AdvancedVariant(_) -> True
-        _, _ -> False
-      }
-    },
   )
 }
 
