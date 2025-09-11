@@ -1,6 +1,6 @@
 import glailwind_merge
 import gleeunit
-import gva.{build, gva, with}
+import gva.{build, class, gva, with, with_all}
 
 pub fn main() -> Nil {
   gleeunit.main()
@@ -49,6 +49,70 @@ pub fn basic_test() -> Nil {
     |> build()
 
   assert glailwind_merge.tw_merge([class]) == "text-white text-md bg-slate-600"
+
+  Nil
+}
+
+pub fn basic_2_test() -> Nil {
+  let button =
+    gva(
+      "text-white",
+      resolver: fn(in: BasicKey) {
+        case in {
+          BasicSize(size) ->
+            case size {
+              BasicSmall -> "text-sm"
+              BasicMedium -> "text-md"
+            }
+          BasicVariant(variant) ->
+            case variant {
+              BasicPrimary -> "bg-slate-950"
+              BasicSecondary -> "bg-slate-600"
+            }
+        }
+      },
+      defaults: [],
+    )
+
+  let class =
+    button
+    |> with_all([BasicSize(BasicMedium), BasicVariant(BasicSecondary)])
+    |> build()
+
+  assert glailwind_merge.tw_merge([class]) == "text-white text-md bg-slate-600"
+
+  Nil
+}
+
+pub fn basic_3_test() -> Nil {
+  let button =
+    gva(
+      "text-white",
+      resolver: fn(in: BasicKey) {
+        case in {
+          BasicSize(size) ->
+            case size {
+              BasicSmall -> "text-sm"
+              BasicMedium -> "text-md"
+            }
+          BasicVariant(variant) ->
+            case variant {
+              BasicPrimary -> "bg-slate-950"
+              BasicSecondary -> "bg-slate-600"
+            }
+        }
+      },
+      defaults: [],
+    )
+
+  let class =
+    button
+    |> with_all([BasicSize(BasicMedium), BasicVariant(BasicSecondary)])
+    |> class("opacity-50")
+    |> build()
+
+  assert glailwind_merge.tw_merge([class])
+    == "text-white opacity-50 text-md bg-slate-600"
 
   Nil
 }

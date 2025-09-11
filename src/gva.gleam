@@ -15,6 +15,17 @@ pub fn with(class: Class(a), key: a) -> Class(a) {
   Class(..class, using: [key, ..class.using])
 }
 
+pub fn with_all(class: Class(a), keys: List(a)) -> Class(a) {
+  case keys {
+    [key, ..keys] -> with_all(Class(..class, using: [key, ..class.using]), keys)
+    [] -> class
+  }
+}
+
+pub fn class(class: Class(a), class_string: String) -> Class(a) {
+  Class(..class, default: class.default <> " " <> class_string)
+}
+
 // Build a list of keys to a class string
 fn do_build(
   resolver: fn(a) -> String,
